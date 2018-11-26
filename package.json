@@ -1,0 +1,28 @@
+{
+  "name": "rtls-infrastructure-poc",
+  "version": "0.0.0",
+  "description": "Proof of concept RTLS internal infrastructure implemented as a server",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --config jest.config.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/F-Army/RTLS-infrastructure-PoC.git"
+  },
+  "keywords": [
+    "rtls",
+    "uwb",
+    "dw1000",
+    "twr"
+  ],
+  "author": "Michele Biondi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/F-Army/RTLS-infrastructure-PoC/issues"
+  },
+  "homepage": "https://github.com/F-Army/RTLS-infrastructure-PoC#readme",
+  "devDependencies": {
+    "jest": "^23.6.0"
+  }
+}
