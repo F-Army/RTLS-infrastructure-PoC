@@ -32,6 +32,12 @@ describe("/range/ Range route tests", () => {
         expect(res.status).toBe(400);
     });
 
+    it("should send back 400 if it doesn't receive all correct arguments", async () => {
+        const app = initRoute(rangeRoute);
+        const res = await request(app).post("/range").send("anchor=CIAO&tag=5&range=205");
+        expect(res.status).toBe(400);
+    });
+
     it("should send back 404 if the request is a GET request", async () => {
         const app = initRoute(rangeRoute);
         const res = await request(app).get("/range");
