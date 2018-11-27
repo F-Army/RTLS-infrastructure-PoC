@@ -6,7 +6,7 @@ const router = express.Router();
 const rangeSchema = Joi.object().keys({
     anchor: Joi.number().min(0).max(65535).required(),
     tag:    Joi.number().min(0).max(65535).required(),
-    range:  Joi.number().min(0).max(200).required(),
+    range:  Joi.number().positive().required(),
 });
 
 router.post("/", async (req, res) => {
