@@ -8,13 +8,24 @@ router.post("/", async (req, res) => {
     if(!req.body.eui || !req.body.short)
         return res.sendStatus(400);
     
+    const euiAlreadyPresent = anchors.filter((anchor) => anchor.eui === Number(req.body.eui)).length === 1;
+
+    if(euiAlreadyPresent) 
+        return res.sendStatus(409);
+    
+    console.log("PRIMA",anchors);
     anchors[Number(req.body.short)] = {
         eui: Number(req.body.eui),
     }
+    console.log("DOPO",anchors);
 
     return res.sendStatus(200);
 });
 
 const getAnchors = () => anchors;
 
-module.exports = { router, getAnchors };
+const clearAll = () => {
+    anchors = [];
+};
+
+module.exports = { router, getAnchors, clearAll };

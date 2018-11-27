@@ -3,7 +3,7 @@ const request = require("supertest");
 const anchors = require("./anchors");
 const bodyParser = require("body-parser");
 
-const { router, getAnchors} = anchors;
+const { router, getAnchors, clearAll} = anchors;
 
 const anchorRoute = router;
 
@@ -17,6 +17,10 @@ const initRoute = (route) => {
 };
 
 describe("/anchor/ Anchor route tests", () => {
+
+    beforeEach(() => {
+        clearAll();
+    });
 
     it("should send back 400 if receives invalid data", async () => {
         const app = initRoute(anchorRoute);
@@ -32,15 +36,36 @@ describe("/anchor/ Anchor route tests", () => {
 
     it("should save anchor when receiving valid data", async () => {
         const app = initRoute(anchorRoute);
-        const res = await request(app).post("/anchor").send("eui=0xDECADECA&short=0x01");
+        await request(app).post("/anchor").send("eui=0xDECADECA&short=0x01");
         expect(getAnchors()["1"].eui).toBe(0xDECADECA);
     });
 
     it("should update anchor when receving a different eui for the same short address", async () => {
         const app = initRoute(anchorRoute);
-        const res = await request(app).post("/anchor").send("eui=0xDECADECA&short=0x01");
-        const res2 = await request(app).post("/anchor").send("eui=0xDECADE00&short=0x01");
-        console.log(getAnchors()["1"].eui);
+        await request(app).post("/anchor").send("eui=0xDECADECA&short=0x01");
+        await request(app).post("/anchor").send("eui=0xDECADE00&short=0x01");
         expect(getAnchors()["1"].eui).toBe(0xDECADE00);
+    });
+
+    it("should not save the same anchor twice", async () => {
+        const app = initRoute(anchorRoute);
+        await request(app).post("/anchor").send("eui=0xDECADECA&short=0x01");
+        await request(app).post("/anchor").send("eui=0xDECADECA&short=0x02");
+        expect(getAnchors().filter((anchor) => anchor.eui === 0xDECADECA).length).toBe(1);        
+    });
+
+    it("should return 409 if trying to save the same anchor (eui)", async () => {
+        const app = initRoute(anchorRoute);
+        await request(app).post("/anchor").send("eui=0xDECADECA&short=0x01");
+        const res2 = await request(app).post("/anchor").send("eui=0xDECADECA&short=0x02");
+        expect(res2.status).toBe(409);
+    });
+
+    it("should save two different anchors", async () => {
+        const app = initRoute(anchorRoute);
+        await request(app).post("/anchor").send("eui=0xDECADECA&short=0x01");
+        await request(app).post("/anchor").send("eui=0xDECADE00&short=0x02");
+        console.log(getAnchors());
+        expect(getAnchors().length).toBe(2);
     });
 });
