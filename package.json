@@ -23,6 +23,12 @@
   },
   "homepage": "https://github.com/F-Army/RTLS-infrastructure-PoC#readme",
   "devDependencies": {
-    "jest": "^23.6.0"
+    "jest": "^23.6.0",
+    "supertest": "^3.3.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "joi": "^14.3.0"
   }
 }

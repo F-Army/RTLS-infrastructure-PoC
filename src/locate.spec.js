@@ -25,7 +25,7 @@ const anchors_positions = [
 ];
 
 
-const calculateLocationFromTagAndAnchors = (tag, ...anchorsPositions) => {
+const calculateAnchorsDataFromTagAndAnchors = (tag, ...anchorsPositions) => {
 
     const distanceFromTwoPoints = (point1, point2) => Math.sqrt(Math.pow((point1.x - point2.x),2) + Math.pow((point1.y - point2.y),2));
     
@@ -55,7 +55,7 @@ describe("Location test", () => {
             z: 0,
         };
 
-        const {x, y, z} = locate(...calculateLocationFromTagAndAnchors(tag_position, ...anchors_positions));
+        const {x, y, z} = locate(...calculateAnchorsDataFromTagAndAnchors(tag_position, ...anchors_positions));
 
         expect(x).toBe(0);
         expect(y).toBe(0);
@@ -69,7 +69,7 @@ describe("Location test", () => {
             z: 0,
         };
 
-        const {x} = locate(...calculateLocationFromTagAndAnchors(tag_position, ...anchors_positions));
+        const {x} = locate(...calculateAnchorsDataFromTagAndAnchors(tag_position, ...anchors_positions));
 
         expect(x).toBe(3);
     });
@@ -82,7 +82,7 @@ describe("Location test", () => {
             z: 0,
         };
 
-        const {y} = locate(...calculateLocationFromTagAndAnchors(tag_position, ...anchors_positions));
+        const {y} = locate(...calculateAnchorsDataFromTagAndAnchors(tag_position, ...anchors_positions));
 
         expect(y).toBe(3);
     });
@@ -95,7 +95,7 @@ describe("Location test", () => {
             z: 0,
         };
 
-        const {x, y} = locate(...calculateLocationFromTagAndAnchors(tag_position, ...anchors_positions));
+        const {x, y} = locate(...calculateAnchorsDataFromTagAndAnchors(tag_position, ...anchors_positions));
 
         expect(x).toBeCloseTo(tag_position.x);
         expect(y).toBeCloseTo(tag_position.y);
@@ -109,7 +109,7 @@ describe("Location test", () => {
             z: 0,
         };
 
-        const {x, y} = locate(...calculateLocationFromTagAndAnchors(tag_position, ...anchors_positions));
+        const {x, y} = locate(...calculateAnchorsDataFromTagAndAnchors(tag_position, ...anchors_positions));
 
         expect(x).toBeCloseTo(tag_position.x);
         expect(y).toBeCloseTo(tag_position.y);
@@ -123,7 +123,7 @@ describe("Location test", () => {
             z: 0,
         };
 
-        const {x, y} = locate(...calculateLocationFromTagAndAnchors(tag_position, ...anchors_positions));
+        const {x, y} = locate(...calculateAnchorsDataFromTagAndAnchors(tag_position, ...anchors_positions));
 
         expect(x).toBeCloseTo(tag_position.x);
         expect(y).toBeCloseTo(tag_position.y);
@@ -137,7 +137,7 @@ describe("Location test", () => {
             z: 0,
         };
 
-        const {x, y} = locate(...calculateLocationFromTagAndAnchors(tag_position, ...anchors_positions));
+        const {x, y} = locate(...calculateAnchorsDataFromTagAndAnchors(tag_position, ...anchors_positions));
 
         expect(x).toBeCloseTo(tag_position.x);
         expect(y).toBeCloseTo(tag_position.y);
