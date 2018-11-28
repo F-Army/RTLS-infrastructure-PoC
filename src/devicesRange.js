@@ -36,7 +36,7 @@ exports.addRange = (newRange) => {
             location_data.push(anchor_data);
         });
 
-        locate(...location_data);
+        console.log(locate(...location_data));
 
         devices.delete(key);
     }
