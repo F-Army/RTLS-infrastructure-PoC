@@ -29,7 +29,7 @@ describe("/anchor/ Anchor route tests", () => {
     });
 
     it("should send 200 if data is valid", async () => {
-        const eui = 0xDECADECA;
+        const eui = 0x00000000DECADECA;
         const short = 0x01;
         const app = initRoute(anchorRoute);
         const res = await request(app).post("/anchor").send(`eui=${eui}&short=${short}`);
@@ -37,17 +37,17 @@ describe("/anchor/ Anchor route tests", () => {
     });
 
     it("should save anchor when receiving valid data", async () => {
-        const eui = 0xDECADECA;
+        const eui = 0x00000000DECADECA;
         const short = 0x01
         const app = initRoute(anchorRoute);
         await request(app).post("/anchor").send(`eui=${eui}&short=${short}`);
-        expect(getAnchors().get(short).eui).toBe(0xDECADECA);
+        expect(getAnchors().get(short).eui).toBe(0x00000000DECADECA);
     });
 
     it("should update anchor when receving a different eui for the same short address", async () => {
         const short = 0x01;
-        const oldEui = 0xDECADECA;
-        const newEui = 0xDECADE00;
+        const oldEui = 0x00000000DECADECA;
+        const newEui = 0x00000000DECADE00;
         const app = initRoute(anchorRoute);
         await request(app).post("/anchor").send(`eui=${oldEui}&short=${short}`);
         await request(app).post("/anchor").send(`eui=${newEui}&short=${short}`);
@@ -55,7 +55,7 @@ describe("/anchor/ Anchor route tests", () => {
     });
 
     it("should not save the same anchor twice", async () => {
-        const eui = 0xDECADECA;
+        const eui = 0x00000000DECADECA;
         const oldShort = 0x01;
         const newShort = 0x02;
         const app = initRoute(anchorRoute);
@@ -65,7 +65,7 @@ describe("/anchor/ Anchor route tests", () => {
     });
 
     it("should return 409 if trying to save the same anchor (eui)", async () => {
-        const eui = 0xDECADECA;
+        const eui = 0x00000000DECADECA;
         const oldShort = 0x01;
         const newShort = 0x02;
         const app = initRoute(anchorRoute);
@@ -75,8 +75,8 @@ describe("/anchor/ Anchor route tests", () => {
     });
 
     it("should save two different anchors", async () => {
-        const oldEui = 0xDECADECA;
-        const newEui = 0xDECADE00;
+        const oldEui = 0x00000000DECADECA;
+        const newEui = 0x00000000DECADE00;
         const oldShort = 0x01;
         const newShort = 0x02;
         const app = initRoute(anchorRoute);
