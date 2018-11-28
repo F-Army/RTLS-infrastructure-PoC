@@ -47,7 +47,7 @@ describe("/anchor/ Anchor route tests", () => {
         });
     });
 
-    it("should update anchor when receving a different eui for the same short address", async () => {
+    it("should update anchor eui when receving a different eui for the same short address", async () => {
         const short = 0x01;
         const oldEui = 0x00000000DECADECA;
         const newEui = 0x00000000DECADE00;

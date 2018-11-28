@@ -21,8 +21,9 @@ router.post("/", async (req, res) => {
     const arrayAnchors = Array.from(anchors.values());
     const euiAlreadyPresent = arrayAnchors.filter((anchor) => anchor.eui === Number(req.body.eui)).length === 1;
 
-    if(euiAlreadyPresent) 
+    if(euiAlreadyPresent) {
         return res.sendStatus(409);
+    }
     
     anchors.set(parseInt(req.body.short), {
         eui: parseInt(req.body.eui),
