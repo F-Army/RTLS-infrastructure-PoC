@@ -1,3 +1,5 @@
+const locator = require("./locate");
+locator.locate = jest.fn();
 const { addRange, getRanges } = require("./devicesRange");
 
 describe("Device range structure tests", () => {
@@ -47,6 +49,30 @@ describe("Device range structure tests", () => {
             anchor: 0x1,
             range: 18,
         }]);
+    });
+
+    it("should locate after 3 valid ranges", () => {
+        const rangeA = {
+            anchor: 0x1,
+            tag: 0x5,
+            range: 20.2,
+        };
+
+        const rangeB = {
+            ...rangeA,
+            anchor: 0x02
+        };
+
+        const rangeC = {
+            ...rangeA,
+            anchor: 0x03
+        };
+
+        addRange(rangeA);
+        addRange(rangeB);
+        addRange(rangeC);
+        
+        expect(locator.locate).toHaveBeenCalledTimes(1);
     });
 
     it("should empty target tag after 3 ranges from 3 different anchors", () => {

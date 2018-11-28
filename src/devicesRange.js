@@ -1,3 +1,5 @@
+const { locate } = require("./locate");
+const { getAnchors } = require("./anchors");
 const devices = new Map();
 
 exports.addRange = (newRange) => {
@@ -23,6 +25,19 @@ exports.addRange = (newRange) => {
     }
 
     if(devices.get(key).length === 3) {
+        
+        const location_data = [];
+        devices.get(newRange.tag).forEach(element => {
+            const anchor_data = {
+                position: {x: 2, y:2, z:2},//getAnchors().get(newRange.anchor).position,
+                distance_cm: element.range
+            }
+
+            location_data.push(anchor_data);
+        });
+
+        locate(...location_data);
+
         devices.delete(key);
     }
     
