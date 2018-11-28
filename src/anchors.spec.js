@@ -32,7 +32,7 @@ describe("/anchor/ Anchor route tests", () => {
         const eui = 0x00000000DECADECA;
         const short = 0x01;
         const app = initRoute(anchorRoute);
-        const res = await request(app).post("/anchor").send(`eui=${eui}&short=${short}`);
+        const res = await request(app).post("/anchor").send(`eui=${eui}&short=${short}&x=0&y=0&z=0`);
         expect(res.status).toBe(200);
     });
 
@@ -40,8 +40,11 @@ describe("/anchor/ Anchor route tests", () => {
         const eui = 0x00000000DECADECA;
         const short = 0x01
         const app = initRoute(anchorRoute);
-        await request(app).post("/anchor").send(`eui=${eui}&short=${short}`);
-        expect(getAnchors().get(short).eui).toBe(0x00000000DECADECA);
+        await request(app).post("/anchor").send(`eui=${eui}&short=${short}&x=-0.1&y=0.1&z=0.1`);
+        expect(getAnchors().get(short)).toMatchObject({ 
+            eui: 0x00000000DECADECA, 
+            position: {x: -0.1, y:0.1, z:0.1} 
+        });
     });
 
     it("should update anchor when receving a different eui for the same short address", async () => {
@@ -49,8 +52,8 @@ describe("/anchor/ Anchor route tests", () => {
         const oldEui = 0x00000000DECADECA;
         const newEui = 0x00000000DECADE00;
         const app = initRoute(anchorRoute);
-        await request(app).post("/anchor").send(`eui=${oldEui}&short=${short}`);
-        await request(app).post("/anchor").send(`eui=${newEui}&short=${short}`);
+        await request(app).post("/anchor").send(`eui=${oldEui}&short=${short}&x=-0.1&y=0.1&z=0.1`);
+        await request(app).post("/anchor").send(`eui=${newEui}&short=${short}&x=-0.1&y=0.1&z=0.1`);
         expect(getAnchors().get(short).eui).toBe(newEui);
     });
 
@@ -59,8 +62,8 @@ describe("/anchor/ Anchor route tests", () => {
         const oldShort = 0x01;
         const newShort = 0x02;
         const app = initRoute(anchorRoute);
-        await request(app).post("/anchor").send(`eui=${eui}&short=${oldShort}`);
-        await request(app).post("/anchor").send(`eui=${eui}&short=${newShort}`);
+        await request(app).post("/anchor").send(`eui=${eui}&short=${oldShort}&x=-0.1&y=0.1&z=0.1`);
+        await request(app).post("/anchor").send(`eui=${eui}&short=${newShort}&x=-0.1&y=0.1&z=0.1`);
         expect(getAnchors().size).toBe(1);        
     });
 
@@ -69,8 +72,8 @@ describe("/anchor/ Anchor route tests", () => {
         const oldShort = 0x01;
         const newShort = 0x02;
         const app = initRoute(anchorRoute);
-        await request(app).post("/anchor").send(`eui=${eui}&short=${oldShort}`);
-        const res2 = await request(app).post("/anchor").send(`eui=${eui}&short=${newShort}`);
+        await request(app).post("/anchor").send(`eui=${eui}&short=${oldShort}&x=-0.1&y=0.1&z=0.1`);
+        const res2 = await request(app).post("/anchor").send(`eui=${eui}&short=${newShort}&x=-0.1&y=0.1&z=0.1`);
         expect(res2.status).toBe(409);
     });
 
@@ -80,8 +83,8 @@ describe("/anchor/ Anchor route tests", () => {
         const oldShort = 0x01;
         const newShort = 0x02;
         const app = initRoute(anchorRoute);
-        await request(app).post("/anchor").send(`eui=${oldEui}&short=${oldShort}`);
-        await request(app).post("/anchor").send(`eui=${newEui}&short=${newShort}`);
+        await request(app).post("/anchor").send(`eui=${oldEui}&short=${oldShort}&x=-0.1&y=0.1&z=0.1`);
+        await request(app).post("/anchor").send(`eui=${newEui}&short=${newShort}&x=-0.1&y=0.1&z=0.1`);
         expect(getAnchors().size).toBe(2);
     });
 });

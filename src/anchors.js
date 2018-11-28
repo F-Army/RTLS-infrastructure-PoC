@@ -7,6 +7,9 @@ let anchors = new Map();
 const anchorScheme = Joi.object().keys({
     eui: Joi.number().min(0).max(0xFFFFFFFFFFFFFFFF).required(),
     short: Joi.number().min(0).max(0xFFFF).required(),
+    x: Joi.number().required(),
+    y: Joi.number().required(),
+    z: Joi.number().required(),
 });
 
 router.post("/", async (req, res) => {
@@ -21,7 +24,14 @@ router.post("/", async (req, res) => {
     if(euiAlreadyPresent) 
         return res.sendStatus(409);
     
-    anchors.set(parseInt(req.body.short), {eui: parseInt(req.body.eui)});
+    anchors.set(parseInt(req.body.short), {
+        eui: parseInt(req.body.eui),
+        position: {
+            x: Number(req.body.x),
+            y: Number(req.body.y),
+            z: Number(req.body.z),
+        }
+    });
 
     return res.sendStatus(200);
 });
