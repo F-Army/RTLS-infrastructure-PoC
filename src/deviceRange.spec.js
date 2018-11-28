@@ -1,5 +1,41 @@
 const locator = require("./locate");
+const anchors = require("./anchors");
+
 locator.locate = jest.fn();
+
+
+anchors.getAnchors = jest.fn(() => {
+    const anchors = new Map();
+    anchors.set(0x01, {
+        eui: 0x01,
+        position: {
+            x: 0,
+            y: 0,
+            z: 0,
+        }
+    });
+    
+    anchors.set(0x02, {
+        eui: 0x02,
+        position: {
+            x: 1,
+            y: 1,
+            z: 1,
+        }
+    });
+    
+    anchors.set(0x03, {
+        eui: 0x03,
+        position: {
+            x: 2,
+            y: 2,
+            z: 2,
+        }
+    });
+    
+    return anchors;
+});
+
 const { addRange, getRanges } = require("./devicesRange");
 
 describe("Device range structure tests", () => {

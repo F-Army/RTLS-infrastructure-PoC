@@ -29,7 +29,7 @@ exports.addRange = (newRange) => {
         const location_data = [];
         devices.get(newRange.tag).forEach(element => {
             const anchor_data = {
-                position: {x: 2, y:2, z:2},//getAnchors().get(newRange.anchor).position,
+                position: getAnchors().get(newRange.anchor).position,
                 distance_cm: element.range
             }
 
