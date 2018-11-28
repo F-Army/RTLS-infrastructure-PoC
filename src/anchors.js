@@ -21,8 +21,4 @@ router.post("/", async (req, res) => {
 
 const getAnchors = () => anchors;
 
-const clearAll = () => {
-    anchors.clear();
-};
-
-module.exports = { router, getAnchors, clearAll };
+module.exports = { router, getAnchors };

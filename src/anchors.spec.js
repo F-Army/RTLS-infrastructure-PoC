@@ -3,7 +3,7 @@ const request = require("supertest");
 const anchors = require("./anchors");
 const bodyParser = require("body-parser");
 
-const { router, getAnchors, clearAll} = anchors;
+const { router, getAnchors} = anchors;
 
 const anchorRoute = router;
 
@@ -19,7 +19,7 @@ const initRoute = (route) => {
 describe("/anchor/ Anchor route tests", () => {
 
     beforeEach(() => {
-        clearAll();
+        getAnchors().clear();
     });
 
     it("should send back 400 if receives invalid data", async () => {
