@@ -52,10 +52,11 @@ describe("/anchor/ Anchor route tests", () => {
     });
 
     it("should not save the same anchor twice", async () => {
+        const eui = 0xDECADECA;
         const app = initRoute(anchorRoute);
-        await request(app).post("/anchor").send("eui=0xDECADECA&short=0x01");
-        await request(app).post("/anchor").send("eui=0xDECADECA&short=0x02");
-        expect(Array.from(getAnchors().values()).filter((anchor) => anchor.eui === 0xDECADECA).length).toBe(1);        
+        await request(app).post("/anchor").send(`eui=${eui}&short=0x01`);
+        await request(app).post("/anchor").send(`eui=${eui}&short=0x02`);
+        expect(getAnchors().size).toBe(1);        
     });
 
     it("should return 409 if trying to save the same anchor (eui)", async () => {
