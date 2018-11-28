@@ -1,36 +1,31 @@
-let devices = [];
+const devices = new Map();
 
 exports.addRange = (newRange) => {
-    const key = newRange.tag.toString();
-    if(devices[key] === undefined) {
-        devices[key] = {
-            ranges: [],
+
+    const key = newRange.tag;
+    if(devices.has(key)) {
+        const alreadyHasRangeFromAnchor = devices.get(key).filter((rangeItem) => rangeItem.anchor === newRange.anchor).length === 1;
+
+        if(alreadyHasRangeFromAnchor) {
+
+            const updateAnchorRange = (rangeItem) => {
+                if(rangeItem.anchor === newRange.anchor)
+                    rangeItem.range = newRange.range;
+                return rangeItem;
+            }
+
+            devices.set(key, devices.get(key).map(updateAnchorRange));
+        } else {
+            devices.get(key).push({anchor: newRange.anchor, range: newRange.range});
         }
-    }
-
-    if( devices[key]
-        .ranges
-        .filter((range) => range.anchor === newRange.anchor)
-        .length === 0
-    ) {
-        devices[key].ranges.push({anchor: newRange.anchor, range: newRange.range});
     } else {
-        devices[key].ranges = devices[key]
-                                .ranges
-                                .map((rangeStored) => 
-                                    rangeStored.anchor === newRange.anchor
-                                    ? {...rangeStored, range: newRange.range}
-                                    : rangeStored
-                                );
+        devices.set(key,[{anchor: newRange.anchor, range: newRange.range}]);
     }
 
-    if(devices[key].ranges.length === 3) {
-        devices[key].ranges = [];
+    if(devices.get(key).length === 3) {
+        devices.delete(key);
     }
+    
 };
 
 exports.getRanges = () => devices;
-
-exports.clearAll = () => {
-    devices = [];
-};

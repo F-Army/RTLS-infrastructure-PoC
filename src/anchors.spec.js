@@ -70,7 +70,6 @@ describe("/anchor/ Anchor route tests", () => {
         const app = initRoute(anchorRoute);
         await request(app).post("/anchor").send("eui=0xDECADECA&short=0x01");
         await request(app).post("/anchor").send("eui=0xDECADE00&short=0x02");
-        console.log(getAnchors());
         expect(getAnchors().size).toBe(2);
     });
 });

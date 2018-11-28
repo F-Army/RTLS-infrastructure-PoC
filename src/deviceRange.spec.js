@@ -1,9 +1,9 @@
-const { addRange, getRanges, clearAll } = require("./devicesRange");
+const { addRange, getRanges } = require("./devicesRange");
 
 describe("Device range structure tests", () => {
 
     beforeEach(() => {
-        clearAll();
+        getRanges().clear();
     });
 
     it("should add new devices correctly", () => {
@@ -12,9 +12,10 @@ describe("Device range structure tests", () => {
             tag: 0x5,
             range: 20.2,
         };
-        expect(getRanges()[newRange.tag.toString()]).toBeUndefined();
+        expect(getRanges().size).toBe(0);
         addRange(newRange);
-        expect(getRanges()[newRange.tag.toString()].ranges[0]).toMatchObject({anchor: newRange.anchor, range: newRange.range});
+        expect(getRanges().size).toBe(1);
+        expect(getRanges().get(newRange.tag)).toMatchObject([{anchor: newRange.anchor, range: newRange.range}]);
     });
 
     it("should not store more than 1 range from the same anchor on the same tag", () => {
@@ -27,7 +28,7 @@ describe("Device range structure tests", () => {
         addRange(newRange);
         addRange(newRange);
 
-        expect(getRanges()[newRange.tag.toString()].ranges.length).toBe(1);
+        expect(getRanges().get(newRange.tag).length).toBe(1);
     });
 
     it("should store the latest range if it receives a duplicate from the same anchor on the same tag", () => {
@@ -42,7 +43,7 @@ describe("Device range structure tests", () => {
         addRange(newRange);
         addRange(newnewRange);
 
-        expect(getRanges()[newnewRange.tag.toString()].ranges).toMatchObject([{
+        expect(getRanges().get(newRange.tag)).toMatchObject([{
             anchor: 0x1,
             range: 18,
         }]);
@@ -69,6 +70,6 @@ describe("Device range structure tests", () => {
         addRange(rangeB);
         addRange(rangeC);
 
-        expect(getRanges()[rangeA.tag.toString()].ranges.length).toBe(0);
+        expect(getRanges().has(rangeA.tag)).toBe(false);
     });
 });
