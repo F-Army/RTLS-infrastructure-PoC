@@ -65,12 +65,11 @@ describe("/anchor/ Anchor route tests", () => {
         expect(res2.status).toBe(409);
     });
 
-    /*it("should save two different anchors", async () => {
+    it("should save two different anchors", async () => {
         const app = initRoute(anchorRoute);
         await request(app).post("/anchor").send("eui=0xDECADECA&short=0x01");
         await request(app).post("/anchor").send("eui=0xDECADE00&short=0x02");
         console.log(getAnchors());
-        expect(getAnchors().length).toBe(2);
+        expect(getAnchors().size).toBe(2);
     });
-    */
 });
