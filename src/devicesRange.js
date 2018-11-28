@@ -3,7 +3,6 @@ const { getAnchors } = require("./anchors");
 const devices = new Map();
 
 exports.addRange = (newRange) => {
-
     const key = newRange.tag;
     if(devices.has(key)) {
         const alreadyHasRangeFromAnchor = devices.get(key).filter((rangeItem) => rangeItem.anchor === newRange.anchor).length === 1;
@@ -40,7 +39,6 @@ exports.addRange = (newRange) => {
 
         devices.delete(key);
     }
-    
 };
 
 exports.getRanges = () => devices;

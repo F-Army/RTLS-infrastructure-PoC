@@ -1,6 +1,8 @@
 const express = require("express");
 const Joi = require("joi");
 
+const { addRange } = require("./devicesRange");
+
 const router = express.Router();
 
 const rangeSchema = Joi.object().keys({
@@ -14,6 +16,7 @@ router.post("/", async (req, res) => {
     if(validation.error) {
         return res.sendStatus(400);
     }
+    addRange({anchor: parseInt(req.body.anchor), tag: parseInt(req.body.tag), range: Number(req.body.range)})
     return res.sendStatus(200);
 });
 
