@@ -1,12 +1,19 @@
+const Joi = require("joi");
 const express = require("express");
-
 const router = express.Router();
 
 let anchors = new Map();
 
+const anchorScheme = Joi.object().keys({
+    eui: Joi.number().min(0).max(0xFFFFFFFFFFFFFFFF).required(),
+    short: Joi.number().min(0).max(0xFFFF).required(),
+});
+
 router.post("/", async (req, res) => {
-    if(!req.body.eui || !req.body.short)
+    const validation = Joi.validate(req.body, anchorScheme);
+    if(validation.error) {
         return res.sendStatus(400);
+    }
     
     const arrayAnchors = Array.from(anchors.values());
     const euiAlreadyPresent = arrayAnchors.filter((anchor) => anchor.eui === Number(req.body.eui)).length === 1;
