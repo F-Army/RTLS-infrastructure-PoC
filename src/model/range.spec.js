@@ -1,5 +1,5 @@
 const locator = require("../locate");
-const anchors = require("../anchors");
+const anchors = require("./anchors");
 
 locator.locate = jest.fn();
 

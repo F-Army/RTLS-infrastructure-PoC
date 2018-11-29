@@ -1,5 +1,5 @@
 const { locate } = require("../locate");
-const { getAnchors } = require("../anchors");
+const { getAnchors } = require("./anchors");
 
 const devices = new Map();
 
