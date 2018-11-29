@@ -10,13 +10,8 @@ exports.addRange = (newRange) => {
 
         if(alreadyHasRangeFromAnchor) {
 
-            const updateAnchorRange = (rangeItem) => {
-                if(rangeItem.anchor === newRange.anchor)
-                    rangeItem.range = newRange.range;
-                return rangeItem;
-            }
-
-            devices.set(key, devices.get(key).map(updateAnchorRange));
+            this.updateRange(newRange);
+            
         } else {
             devices.get(key).push({anchor: newRange.anchor, range: newRange.range});
         }
@@ -41,5 +36,16 @@ exports.addRange = (newRange) => {
         devices.delete(key);
     }
 };
+
+exports.updateRange = (newRange) => {
+    const key = newRange.tag;
+    const updateAnchorRange = (rangeItem) => {
+        if(rangeItem.anchor === newRange.anchor)
+            rangeItem.range = newRange.range;
+        return rangeItem;
+    }
+
+    devices.set(key, devices.get(key).map(updateAnchorRange));
+}
 
 exports.getRanges = () => devices;
