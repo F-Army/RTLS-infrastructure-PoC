@@ -2,8 +2,8 @@ var express = require('express');
 var bodyParser = require("body-parser");
 var app = express();
 
-const anchors = require("./src/anchors");
-const rangeRoute = require("./src/range");
+const anchors = require("./src/controller/anchors");
+const rangeRoute = require("./src/controller/range");
 
 app.use(bodyParser.urlencoded({
   extended: true

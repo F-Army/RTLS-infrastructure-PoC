@@ -1,7 +1,7 @@
 const express = require("express");
 const Joi = require("joi");
 
-const { addRange } = require("../model/range");
+const { addRange, getRanges, updateRange } = require("../model/range");
 
 const rangeSchema = Joi.object().keys({
     anchor: Joi.number().min(0).max(65535).required(),
@@ -16,7 +16,20 @@ router.post("/", async (req, res) => {
     if(validation.error) {
         return res.sendStatus(400);
     }
-    addRange({anchor: parseInt(req.body.anchor), tag: parseInt(req.body.tag), range: Number(req.body.range)});
+
+    const alreadyHasRangeFromAnchor = () => {
+        const tagRanges = getRanges().get(parseInt(req.body.tag));
+        if(!tagRanges) return false;
+        
+        return tagRanges.filter((rangeItem) => rangeItem.anchor === parseInt(req.body.anchor)).length === 1;
+    }
+        
+    if(alreadyHasRangeFromAnchor()) {
+        updateRange(req.body);
+    } else {
+        addRange({anchor: parseInt(req.body.anchor), tag: parseInt(req.body.tag), range: Number(req.body.range)});
+    }
+
     return res.sendStatus(200);
 });
 

@@ -6,15 +6,7 @@ const devices = new Map();
 exports.addRange = (newRange) => {
     const key = newRange.tag;
     if(devices.has(key)) {
-        const alreadyHasRangeFromAnchor = devices.get(key).filter((rangeItem) => rangeItem.anchor === newRange.anchor).length === 1;
-
-        if(alreadyHasRangeFromAnchor) {
-
-            this.updateRange(newRange);
-            
-        } else {
-            devices.get(key).push({anchor: newRange.anchor, range: newRange.range});
-        }
+         devices.get(key).push({anchor: newRange.anchor, range: newRange.range});
     } else {
         devices.set(key,[{anchor: newRange.anchor, range: newRange.range}]);
     }
@@ -38,10 +30,10 @@ exports.addRange = (newRange) => {
 };
 
 exports.updateRange = (newRange) => {
-    const key = newRange.tag;
+    const key = parseInt(newRange.tag);
     const updateAnchorRange = (rangeItem) => {
-        if(rangeItem.anchor === newRange.anchor)
-            rangeItem.range = newRange.range;
+        if(rangeItem.anchor === parseInt(newRange.anchor))
+            rangeItem.range = Number(newRange.range);
         return rangeItem;
     }
 

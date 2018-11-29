@@ -3,6 +3,10 @@ const request = require("supertest");
 const rangeRoute = require("./range");
 const bodyParser = require("body-parser");
 
+const rangeModel = require("../model/range");
+
+rangeModel.updateRange = jest.fn();
+
 const initRoute = (route) => {
     const app = express();
     app.use(bodyParser.urlencoded({
@@ -13,6 +17,10 @@ const initRoute = (route) => {
 };
 
 describe("/range/ Range route tests", () => {
+
+    beforeEach(() => {
+        rangeModel.getRanges().clear();
+    });
 
     it("should send back 400 if receives invalid data", async () => {
         const app = initRoute(rangeRoute);
@@ -36,5 +44,12 @@ describe("/range/ Range route tests", () => {
         const app = initRoute(rangeRoute);
         const res = await request(app).post("/range").send("anchor=CIAO&tag=5&range=205");
         expect(res.status).toBe(400);
+    });
+
+    it("should update range if needed", async () => {
+        const app = initRoute(rangeRoute);
+        await request(app).post("/range").send("anchor=2&tag=5&range=25.2");
+        await request(app).post("/range").send("anchor=2&tag=5&range=24.9");
+        expect(rangeModel.updateRange).toHaveBeenCalledTimes(1);
     });
 });
