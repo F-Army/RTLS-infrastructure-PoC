@@ -4,6 +4,7 @@ const anchors = require("../anchors");
 locator.locate = jest.fn();
 
 
+
 anchors.getAnchors = jest.fn(() => {
     const anchors = new Map();
     anchors.set(0x01, {

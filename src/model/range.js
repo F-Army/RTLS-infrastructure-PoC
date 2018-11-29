@@ -25,7 +25,7 @@ exports.addRange = (newRange) => {
     }
 
     if(devices.get(key).length === 3) {
-        
+
         const location_data = [];
         devices.get(newRange.tag).forEach(element => {
             const anchor_data = {
