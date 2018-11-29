@@ -1,6 +1,15 @@
+const Joi = require("joi");
 const { locate } = require("./locate");
 const { getAnchors } = require("./anchors");
+
 const devices = new Map();
+
+
+exports.rangeSchema = Joi.object().keys({
+    anchor: Joi.number().min(0).max(65535).required(),
+    tag:    Joi.number().min(0).max(65535).required(),
+    range:  Joi.number().positive().required(),
+});
 
 exports.addRange = (newRange) => {
     const key = newRange.tag;

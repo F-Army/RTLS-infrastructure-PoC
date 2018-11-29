@@ -21,7 +21,6 @@ app.get('/', function (req, res) {
 app.use("/anchor", anchors.router);
 app.use("/range", rangeRoute);
 
-
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
 });
