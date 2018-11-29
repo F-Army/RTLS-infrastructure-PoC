@@ -22,16 +22,12 @@ describe("test", () => {
         expect(getAnchors().get(templateAnchor.short).eui).toBe(newEui);
     });
 
-    /*
     it("should save two different anchors", async () => {
-        const oldEui = 0x00000000DECADECA;
-        const newEui = 0x00000000DECADE00;
-        const oldShort = 0x01;
-        const newShort = 0x02;
-        const app = initRoute(anchorRoute);
-        await request(app).post("/anchor").send(`eui=${oldEui}&short=${oldShort}&x=-0.1&y=0.1&z=0.1`);
-        await request(app).post("/anchor").send(`eui=${newEui}&short=${newShort}&x=-0.1&y=0.1&z=0.1`);
+
+        const otherAnchor = { ...templateAnchor, eui: 0x00000000DECADE00, short: 0x02 };
+
+        addAnchor(templateAnchor);
+        addAnchor(otherAnchor);
         expect(getAnchors().size).toBe(2);
     });
-    */
 });
