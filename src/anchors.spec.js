@@ -3,7 +3,8 @@ const request = require("supertest");
 const anchors = require("./anchors");
 const bodyParser = require("body-parser");
 
-const { router, getAnchors} = anchors;
+const { router } = anchors;
+const { getAnchors } = require("./model/anchors");
 
 const anchorRoute = router;
 
