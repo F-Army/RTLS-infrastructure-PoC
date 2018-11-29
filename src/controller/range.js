@@ -6,7 +6,7 @@ const { addRange, getRanges, updateRange } = require("../model/range");
 const rangeSchema = Joi.object().keys({
     anchor: Joi.number().min(0).max(65535).required(),
     tag:    Joi.number().min(0).max(65535).required(),
-    range:  Joi.number().positive().required(),
+    range:  Joi.number().min(0).required(),
 });
 
 const router = express.Router();
@@ -29,6 +29,8 @@ router.post("/", async (req, res) => {
     } else {
         addRange({anchor: parseInt(req.body.anchor), tag: parseInt(req.body.tag), range: Number(req.body.range)});
     }
+
+    console.log(getRanges());
 
     return res.sendStatus(200);
 });
