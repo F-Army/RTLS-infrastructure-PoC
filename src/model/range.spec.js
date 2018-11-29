@@ -1,5 +1,5 @@
-const locator = require("./locate");
-const anchors = require("./anchors");
+const locator = require("../locate");
+const anchors = require("../anchors");
 
 locator.locate = jest.fn();
 
@@ -36,7 +36,7 @@ anchors.getAnchors = jest.fn(() => {
     return anchors;
 });
 
-const { addRange, getRanges } = require("./devicesRange");
+const { addRange, getRanges } = require("./range");
 
 describe("Device range structure tests", () => {
 

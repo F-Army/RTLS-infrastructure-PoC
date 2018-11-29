@@ -1,6 +1,6 @@
 const Joi = require("joi");
-const { locate } = require("./locate");
-const { getAnchors } = require("./anchors");
+const { locate } = require("../locate");
+const { getAnchors } = require("../anchors");
 
 const devices = new Map();
 

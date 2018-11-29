@@ -1,7 +1,7 @@
 const express = require("express");
 const Joi = require("joi");
 
-const { addRange, rangeSchema } = require("./devicesRange");
+const { addRange, rangeSchema } = require("./model/range");
 
 const router = express.Router();
 
