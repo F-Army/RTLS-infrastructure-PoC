@@ -4,13 +4,7 @@ const router = express.Router();
 
 let anchors = new Map();
 
-const anchorScheme = Joi.object().keys({
-    eui: Joi.number().min(0).max(0xFFFFFFFFFFFFFFFF).required(),
-    short: Joi.number().min(0).max(0xFFFF).required(),
-    x: Joi.number().required(),
-    y: Joi.number().required(),
-    z: Joi.number().required(),
-});
+const { anchorScheme } = require("./model/anchors");
 
 router.post("/", async (req, res) => {
     const validation = Joi.validate(req.body, anchorScheme);
