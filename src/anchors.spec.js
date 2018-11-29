@@ -48,16 +48,6 @@ describe("/anchor/ Anchor route tests", () => {
         });
     });
 
-    it("should update anchor eui when receving a different eui for the same short address", async () => {
-        const short = 0x01;
-        const oldEui = 0x00000000DECADECA;
-        const newEui = 0x00000000DECADE00;
-        const app = initRoute(anchorRoute);
-        await request(app).post("/anchor").send(`eui=${oldEui}&short=${short}&x=-0.1&y=0.1&z=0.1`);
-        await request(app).post("/anchor").send(`eui=${newEui}&short=${short}&x=-0.1&y=0.1&z=0.1`);
-        expect(getAnchors().get(short).eui).toBe(newEui);
-    });
-
     it("should not save the same anchor twice", async () => {
         const eui = 0x00000000DECADECA;
         const oldShort = 0x01;
