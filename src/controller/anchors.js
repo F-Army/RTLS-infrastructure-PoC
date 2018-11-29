@@ -2,7 +2,7 @@ const Joi = require("joi");
 const express = require("express");
 const router = express.Router();
 
-const { getAnchors, addAnchor } = require("./model/anchors");
+const { getAnchors, addAnchor } = require("../model/anchors");
 
 const euiAlreadyPresent = (eui) => {
     const arrayAnchors = Array.from(getAnchors().values());

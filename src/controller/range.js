@@ -1,7 +1,7 @@
 const express = require("express");
 const Joi = require("joi");
 
-const { addRange } = require("./model/range");
+const { addRange } = require("../model/range");
 
 const rangeSchema = Joi.object().keys({
     anchor: Joi.number().min(0).max(65535).required(),

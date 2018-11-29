@@ -4,7 +4,7 @@ const anchors = require("./anchors");
 const bodyParser = require("body-parser");
 
 const { router } = anchors;
-const { getAnchors } = require("./model/anchors");
+const { getAnchors } = require("../model/anchors");
 
 const anchorRoute = router;
 
