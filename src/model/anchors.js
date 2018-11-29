@@ -1,5 +1,3 @@
-const Joi = require("joi");
-
 let anchors = new Map();
 
 exports.getAnchors = () => anchors;
