@@ -30,4 +30,10 @@ describe("test", () => {
         addAnchor(otherAnchor);
         expect(getAnchors().size).toBe(2);
     });
+
+    it("should not save the same anchor twice", async () => {
+        addAnchor(templateAnchor);
+        addAnchor(templateAnchor);
+        expect(getAnchors().size).toBe(1);        
+    });
 });
