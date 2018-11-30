@@ -30,8 +30,6 @@ router.post("/", async (req, res) => {
         addRange({anchor: parseInt(req.body.anchor), tag: parseInt(req.body.tag), range: Number(req.body.range)});
     }
 
-    console.log(getRanges());
-
     return res.sendStatus(200);
 });
 
