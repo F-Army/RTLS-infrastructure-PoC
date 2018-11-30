@@ -56,4 +56,22 @@ describe("/anchor/ Anchor route tests", () => {
         expect(res.status).toBe(200);
         expect(res.body).toMatchObject({eui, position:{x:-0.1, y: 0.1, z: 0.1}});
     });
+
+    it("should return 400 on get if target anchor doesn't exist", async () => {
+        const app = initRoute(anchorRoute);
+        const res = await request(app).get(`/anchor/1`);
+        expect(res.status).toBe(400);
+    })
+
+    it("should update anchor position and return 200", async () => {
+        const eui = 0x00000000DECADECA;
+        const short = 0x01;
+        const oldPosition = {x: 0, y: 0, z: 0};
+        const newPosition = {...oldPosition, x: 5};
+        const app = initRoute(anchorRoute);
+        await request(app).post(`/anchor/${short}`).send(`eui=${eui}&x=${oldPosition.x}&y=${oldPosition.y}&z=${oldPosition.z}`);
+        const res = await request(app).put(`/anchor/${short}`).send(`eui=${eui}&x=${newPosition.x}&y=${newPosition.y}&z=${newPosition.z}`);
+        expect(res.status).toBe(200);
+        expect(res.body).toMatchObject({eui, position: newPosition});
+    });
 });

@@ -34,11 +34,32 @@ router.post("/:short", async (req, res) => {
 router.get("/:short", async (req,res) => {
     const anchor = getAnchors().get(parseInt(req.params.short));
     res.setHeader('Content-Type', 'application/json');
-    
+
     if(anchor) {
         return res.status(200).send(JSON.stringify(anchor, null, 3));
     }
 
-    return res.sendStatus(404);
+    return res.sendStatus(400);
 });
+
+router.put("/:short", async (req,res) => {
+    const anchor = getAnchors().get(parseInt(req.params.short));
+    if(anchor) {
+        if(req.body.eui)
+            anchor.eui = parseInt(req.body.eui);
+        if(req.body.x)
+            anchor.position.x = parseInt(req.body.x);
+        if(req.body.y)
+            anchor.position.y = parseInt(req.body.y);
+        if(req.body.z)
+            anchor.position.z = parseInt(req.body.z);
+
+        res.setHeader('Content-Type', 'application/json');
+
+        return res.status(200).send(JSON.stringify(anchor, null, 3));
+    }
+
+    return res.sendStatus(400);
+});
+
 module.exports = { router };
