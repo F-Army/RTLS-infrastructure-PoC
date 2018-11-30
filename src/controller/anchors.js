@@ -24,7 +24,6 @@ router.post("/:short", async (req, res) => {
         return res.sendStatus(400);
     }
     
-
     if(euiAlreadyPresent(req.body.eui)) return res.sendStatus(409);
 
     addAnchor(newAnchor);
