@@ -3,6 +3,9 @@ const request = require("supertest");
 const rangeRoute = require("./range");
 const bodyParser = require("body-parser");
 
+const rangeModel = require("./../model/range");
+
+
 const initRoute = (route) => {
     const app = express();
     app.use(bodyParser.urlencoded({
@@ -13,6 +16,10 @@ const initRoute = (route) => {
 };
 
 describe("/range/ Range route tests", () => {
+
+    beforeEach(() => {
+        rangeModel.getRanges().clear();
+    });
 
     it("should send back 400 if receives invalid data", async () => {
         const app = initRoute(rangeRoute);
@@ -38,39 +45,12 @@ describe("/range/ Range route tests", () => {
         expect(res.status).toBe(400);
     });
 
-    it("should send back 404 if the request is a GET request", async () => {
+    /*
+    it("should update range if needed", async () => {
         const app = initRoute(rangeRoute);
-        const res = await request(app).get("/range");
-        expect(res.status).toBe(404);
+        await request(app).post("/range").send("anchor=2&tag=5&range=25.2");
+        await request(app).post("/range").send("anchor=2&tag=5&range=24.9");
+        expect(updateRange).toHaveBeenCalled();
     });
-
-    it("should send back 404 if the request is PUT request", async () => {
-        const app = initRoute(rangeRoute);
-        const res = await request(app).put("/range");
-        expect(res.status).toBe(404);
-    });
-
-    it("should send back 404 if the request is HEAD request", async () => {
-        const app = initRoute(rangeRoute);
-        const res = await request(app).head("/range");
-        expect(res.status).toBe(404);
-    });
-
-    it("should send back 404 if the request is DELETE request", async () => {
-        const app = initRoute(rangeRoute);
-        const res = await request(app).delete("/range");
-        expect(res.status).toBe(404);
-    });
-
-    it("should send back 404 if the request is OPTIONS request", async () => {
-        const app = initRoute(rangeRoute);
-        const res = await request(app).options("/range");
-        expect(res.status).toBe(200);
-    });
-
-    it("should send back 404 if the request is TRACE request", async () => {
-        const app = initRoute(rangeRoute);
-        const res = await request(app).trace("/range");
-        expect(res.status).toBe(404);
-    });
+    */
 });
