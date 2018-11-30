@@ -75,5 +75,11 @@ describe("/anchor/ Anchor route tests", () => {
         expect(res.status).toBe(200);
         expect(res.body).toMatchObject({eui:newEui, position: newPosition});
     });
+
+    it("should return 400 if updated anchor doesn't exist", async () => {
+        const app = initRoute(anchorRoute);
+        const res = await request(app).put(`/anchor/1`).send(`eui=03&x=0&y=0&z=0`);
+        expect(res.status).toBe(400);
+    });
     
 });
