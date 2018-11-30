@@ -31,6 +31,14 @@ router.post("/:short", async (req, res) => {
     return res.sendStatus(200);
 });
 
+router.get("/:short", async (req,res) => {
+    const anchor = getAnchors().get(parseInt(req.params.short));
+    res.setHeader('Content-Type', 'application/json');
+    
+    if(anchor) {
+        return res.status(200).send(JSON.stringify(anchor, null, 3));
+    }
 
-
+    return res.sendStatus(404);
+});
 module.exports = { router };
