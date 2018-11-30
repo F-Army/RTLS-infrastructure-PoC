@@ -17,18 +17,16 @@ const anchorScheme = Joi.object().keys({
     z: Joi.number().required(),
 });
 
-router.post("/:eui", async (req, res) => {
-    const eui = req.params.eui;
-    const newAnchor = { ...req.body, eui };
-    const validation = Joi.validate(newAnchor, anchorScheme);
+router.post("/", async (req, res) => {
+    const validation = Joi.validate(req.body, anchorScheme);
     if(validation.error) {
         return res.sendStatus(400);
     }
     
 
-    if(euiAlreadyPresent(eui)) return res.sendStatus(409);
+    if(euiAlreadyPresent(req.body.eui)) return res.sendStatus(409);
 
-    addAnchor(newAnchor);
+    addAnchor(req.body);
     
     return res.sendStatus(200);
 });
