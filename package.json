@@ -30,6 +30,7 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "joi": "^14.3.0"
+    "joi": "^14.3.0",
+    "slmf-http-connector": "^0.1.2"
   }
 }

@@ -6,6 +6,7 @@ const devices = new Map();
 exports.addRange = (newRange) => {
     const key = newRange.tag;
     if(!getAnchors().has(newRange.anchor)) {
+        console.log("No anchor");
         return;
     }
     if(devices.has(key)) {
