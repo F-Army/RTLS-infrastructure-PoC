@@ -1,7 +1,19 @@
 const { locate } = require("../locate");
 const { getAnchors } = require("./anchors");
+const { SlmfHttpConnector, BatteryStatus, TagIdFormat } = require("slmf-http-connector");
 
 const devices = new Map();
+
+
+const connector = new SlmfHttpConnector({
+    accumulationPeriod : 500,
+    maxAccumulatedMessages : 3,
+    maxSlmfMessages : 2,
+    maxRetries: 3,
+    port: 3001,
+    url : "http://127.0.0.1",
+});
+
 
 exports.addRange = (newRange) => {
     const key = newRange.tag;
@@ -27,8 +39,24 @@ exports.addRange = (newRange) => {
             location_data.push(anchor_data);
         });
 
-        console.log(locate(...location_data));
+        if(!connector.isRunning()) {
+            console.log("Started connector");
+            connector.start();
+        }
+        
+        const position = locate(...location_data);
+        console.log(position);
 
+        connector.addMessages({
+            source: "Infrastructure",
+            format: "DFT",
+            tagIdFormat: TagIdFormat.IEEE_EUI_64,
+            tagId: key,
+            position,
+            battery: BatteryStatus.Unknown,
+            timestamp: new Date(),
+        });
+        
         devices.delete(key);
     }
 };
