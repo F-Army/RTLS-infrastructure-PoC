@@ -51,7 +51,7 @@ exports.addRange = (newRange) => {
             source: "Infrastructure",
             format: "DFT",
             tagIdFormat: TagIdFormat.IEEE_EUI_64,
-            tagId: key,
+            tagId: key, // eui is assumed to be short address
             position,
             battery: BatteryStatus.Unknown,
             timestamp: new Date(),
