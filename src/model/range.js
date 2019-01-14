@@ -45,7 +45,7 @@ exports.addRange = (newRange) => {
         }
         
         const position = locate(...location_data);
-        console.log(`Position found: x = ${position.x.toFixed(2)}, y = ${position.y.toFixed(2)}`);
+        console.log(position);
 
         connector.addMessages({
             source: "Infrastructure",
