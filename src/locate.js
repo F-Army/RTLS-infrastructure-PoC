@@ -8,5 +8,5 @@ exports.locate = (...anchor_data) => {
     
         x = (C*E-F*B) / (E*A-B*D);
         y = (C*D-A*F) / (B*D-A*E);
-        return {x, y, z: 0};
+        return {x: Number(x.toFixed(2)), y: Number(y.toFixed(2)), z: 0};
 };
